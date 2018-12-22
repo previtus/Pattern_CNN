@@ -50,7 +50,7 @@ def visualize_history(hi, show=True, save=False, save_path='', show_also='', cus
                 #    raise
                 print("couldn't make a folder", filename)
 
-        plt.savefig(filename)
+        plt.savefig(filename+'.png')
         plt.savefig(filename+'.pdf', format='pdf')
 
         print("Saved image to "+filename)

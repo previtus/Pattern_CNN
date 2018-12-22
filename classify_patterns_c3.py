@@ -307,7 +307,7 @@ history = model.fit(X_bottleneck_train, y_train,
 
 visualize_history(history.history, show=False, show_also='acc', save=True, save_path=PLOTNAME)
 
-model.save(PLOTNAME+"model")
+model.save(PLOTNAME+"model.h5")
 
 # ==============================================================================
 

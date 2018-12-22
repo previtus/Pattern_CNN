@@ -152,7 +152,7 @@ model.summary()
 #model.compile(loss='categorical_crossentropy', optimizer=optimizers.RMSprop(lr=1e-4),metrics=['accuracy'])
 #model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 
-model.compile(loss='categorical_crossentropy', optimizer=optimizers.RMSprop(lr=1e-6),metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer=optimizers.RMSprop(lr=1e-5),metrics=['accuracy'])
 
 # ====================================================================================
 

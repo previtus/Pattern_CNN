@@ -9,7 +9,7 @@ if len(sys.argv)>1:
 
 img_size = None #(20,20)
 img_size = (150,150)
-epochs = 1 #750
+epochs = 750
 batch_size = 32
 validation_split = 0.2
 

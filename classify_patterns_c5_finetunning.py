@@ -75,6 +75,7 @@ Y_VAL = y_from_x(X_VAL)
 from keras.preprocessing.image import load_img, img_to_array
 import numpy as np
 import keras
+from visualize_history import visualize_history
 from matplotlib import pyplot as plt
 
 print("Loading image data!")
@@ -163,7 +164,6 @@ history = model.fit(x_train, y_train,
 
 model.save(PLOTNAME+"model.h5")
 
-from visualize_history import visualize_history
 visualize_history(history.history, show_also='acc', save=True, show=False, save_path=PLOTNAME+specialname)
 
 # ==============================================================================

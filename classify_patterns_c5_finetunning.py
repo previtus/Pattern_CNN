@@ -39,7 +39,7 @@ labels = range(0,num_classes)
 
 SHUFFLE_SEED=None
 
-SPLIT = 0.3
+SPLIT = validation_split
 DROP=0.2
 
 print(folders)

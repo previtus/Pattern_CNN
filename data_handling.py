@@ -53,15 +53,11 @@ def get_paths_of_all_images_from_folders(folders):
 
     return X_all_paths, Y_all_labels
 
-
-def len_from_image_name(image_name):
-    tmp = image_name.split(".png")
+def label_image_name(image_name):
+    tmp = image_name.split(".jpg")
     tmp = tmp[0].split("/")
     label = tmp[-2]
-    tmp = tmp[-1].split("_")
-    length = int(tmp[-1])
-
-    return length, label
+    return label
 
 def get_data_sorted_by_labels(images, unique_labels):
     by_label = {}
@@ -69,7 +65,7 @@ def get_data_sorted_by_labels(images, unique_labels):
         by_label[label] = []
 
     for image in images:
-        length, label = len_from_image_name(image)
+        label = label_image_name(image)
         by_label[label].append(image)
 
     for label in unique_labels:
@@ -84,7 +80,7 @@ def debug_occurances_in_set(images, unique_labels):
         occurances[label] = 0
 
     for image in images:
-        length, label = len_from_image_name(image)
+        label = label_image_name(image)
         occurances[label] += 1
 
     for label in unique_labels:
@@ -92,26 +88,6 @@ def debug_occurances_in_set(images, unique_labels):
 
     return occurances
 
-
-def how_many_images_longer_than_by_classes(THR, images, unique_labels, verbose=True):
-    lengths_by_class = {}
-    occurances_longer_than = {}
-    for label in unique_labels:
-        lengths_by_class[label] = []
-        occurances_longer_than[label] = 0
-
-    for image in images:
-        length, label = len_from_image_name(image)
-        lengths_by_class[label].append(length)
-
-        if length > THR:
-            occurances_longer_than[label] += 1
-
-    if verbose:
-        for label in unique_labels:
-            print(label, "occurs (longer than", THR, ") for", occurances_longer_than[label], "times out of", len(lengths_by_class[label]))
-
-    return occurances_longer_than, lengths_by_class
 
 def shuffle_two_lists_together(a,b, SEED=None):
     if SEED is not None:
@@ -129,31 +105,6 @@ THR1 = 1700
 _,_ = how_many_images_longer_than_by_classes(THR1, images=X_all_paths, unique_labels=unique_labels)
 """
 
-def select_signals_longer_than(THR, images, v=True):
-    LONGER = []
-    SHORTER = [] # shorter or equal
-
-    for image in images:
-        length, _ = len_from_image_name(image)
-        if length > THR:
-            LONGER.append(image)
-        else:
-            SHORTER.append(image)
-
-    if v:
-        print("Selected", len(LONGER), "signals longer than", THR,"which leaves the rest smaller (or eq.)", len(SHORTER))
-
-    return LONGER, SHORTER
-
-"""
-THR1 = 1000
-LONGER, SHORTER = select_signals_longer_than(THR1, images=X_all_paths)
-
-print("LONGER")
-debug_occurances_in_set(LONGER,unique_labels)
-print("SHORTER")
-debug_occurances_in_set(SHORTER,unique_labels)
-"""
 
 def sample_random_subset_from_list(L, N):
     # SHUFFLES!
@@ -178,7 +129,7 @@ def select_balanced_set_max_C_from_one_class(C, images, unique_labels, v=True):
         images_by_categories[label] = []
 
     for image in images:
-        length, label = len_from_image_name(image)
+        label = label_image_name(image)
         images_by_categories[label].append(image)
 
     if v:
@@ -279,7 +230,8 @@ def LOAD_DATASET_PREP(THR1, C_balanced, SPLIT, FOLDER, folders):
     unique_labels = np.unique(Y_all_labels)
     print("Unique labels:", unique_labels)
 
-    LONGER_THAN_THR1, REST_SHORT = select_signals_longer_than(THR1, X_all_paths, v=False)
+    LONGER_THAN_THR1 = X_all_paths
+    REST_SHORT = []
     BALANCED, REST_UNBAL = select_balanced_set_max_C_from_one_class(C_balanced, LONGER_THAN_THR1, unique_labels, v=False)
 
     Y_BALANCED = y_from_x(BALANCED)
@@ -352,7 +304,8 @@ def LOAD_DATASET_VAL_LONGER_THR2(THR1, C_balanced, SPLIT, FOLDER, folders, THR2,
         X_VAL_FULL.append(s)
 
     # SELECT ONLY THOSE LONG
-    X_VAL_FULL, TOO_SHORT_FOR_VAL = select_signals_longer_than(THR2, X_VAL_FULL, v=False)
+    #X_VAL_FULL, TOO_SHORT_FOR_VAL = select_signals_longer_than(THR2, X_VAL_FULL, v=False)
+    TOO_SHORT_FOR_VAL = []
     # STILL BALANCE 10 to 1
     if StillBalance10to1to1:
         #C_balanced_2 = 10000

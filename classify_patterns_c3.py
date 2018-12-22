@@ -300,7 +300,7 @@ history = model.fit(X_bottleneck_train, y_train,
                     verbose=1)
 
 from visualize_history import visualize_history
-visualize_history(history.history, show_also='acc', save=True, save_path='classifier3_'+str(epochs)+'epochs_')
+visualize_history(history.history, show=False, show_also='acc', save=True, save_path='classifier3_'+str(epochs)+'epochs_')
 
 
 
@@ -366,5 +366,8 @@ df_cm = pd.DataFrame(cm, range(len(classes_names)-1),
 plt.figure(figsize = (10,7))
 sn.set(font_scale=1.4)#for label size
 sn.heatmap(df_cm, annot=True,annot_kws={"size": 12}, cmap="YlGnBu")
-plt.show()
 
+plt.savefig("LastConfMatrix")
+plt.savefig("LastConfMatrix"+'.pdf', format='pdf')
+
+#plt.show()

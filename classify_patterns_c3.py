@@ -1,3 +1,10 @@
+import sys
+print(len(sys.argv), " arguments : " , str(sys.argv))
+FOLDER = '/home/vitek/Downloads/DTD/dtd-r1.0.1/dtd/images/'
+
+if len(sys.argv)>1:
+    FOLDER = str(sys.argv[1])
+
 # SETUP
 
 img_size = None #(20,20)
@@ -13,7 +20,6 @@ RESCALE = 1. / 255 # put data from 0-255 into 0-1
 # GET ALL DATA
 # define the classes in here directly
 
-FOLDER = '/home/vitek/Downloads/DTD/dtd-r1.0.1/dtd/images/'
 
 folders = ["banded", "crosshatched", "grid", "matted", "potholed", "studded", "blotchy", "crystalline", "grooved", "meshed", "scaly", "swirly", "braided", "dotted", "honeycombed", "paisley", "smeared", "veined", "bubbly", "fibrous", "interlaced", "perforated", "spiralled", "waffled", "bumpy", "flecked", "knitted", "pitted", "sprinkled", "woven", "chequered", "freckled", "lacelike", "pleated", "stained", "wrinkled", "cobwebbed", "frilly", "lined", "polka-dotted", "stratified", "zigzagged", "cracked", "gauzy", "marbled", "porous", "striped"]
 classes_names = folders
@@ -26,6 +32,7 @@ labels_texts = classes_names
 labels = range(0,num_classes)
 
 SHUFFLE_SEED=None
+SUBSET = None #200 # (optional)
 
 print(folders)
 
@@ -117,6 +124,13 @@ def split_data(x,y,validation_split=0.2):
 
 X_all_image_data,Y_all_labels = shuffle_two_lists_together(X_all_image_data,Y_all_labels,SEED=SHUFFLE_SEED)
 x_train,y_train,x_test,y_test = split_data(X_all_image_data,Y_all_labels,validation_split=validation_split)
+
+# (optional) SUBSET
+if SUBSET is not None:
+    x_train = x_train[0:SUBSET]
+    y_train = y_train[0:SUBSET]
+    x_test = x_test[0:SUBSET]
+    y_test = y_test[0:SUBSET]
 
 print("x_train:", x_train.shape)
 print("y_train:", y_train.shape)#, y_train[0:10])
@@ -347,8 +361,8 @@ print(cm)
 import seaborn as sn
 import pandas  as pd
 
-df_cm = pd.DataFrame(cm, range(len(classes_names)),
-                  range(len(classes_names)))
+df_cm = pd.DataFrame(cm, range(len(classes_names)-1),
+                  range(len(classes_names)-1))
 plt.figure(figsize = (10,7))
 sn.set(font_scale=1.4)#for label size
 sn.heatmap(df_cm, annot=True,annot_kws={"size": 12}, cmap="YlGnBu")

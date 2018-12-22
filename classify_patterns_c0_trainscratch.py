@@ -113,7 +113,7 @@ x_test *= RESCALE
 
 
 from keras.applications import VGG16
-vgg_conv = VGG16(weights='None', include_top=False, input_shape=(img_size[0], img_size[1], 3))
+vgg_conv = VGG16(weights=None, include_top=False, input_shape=(img_size[0], img_size[1], 3))
 
 # All trainable!
 # Freeze the layers except the last 4 layers

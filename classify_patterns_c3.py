@@ -372,7 +372,7 @@ plt.figure(figsize = (10,7))
 sn.set(font_scale=1.4)#for label size
 sn.heatmap(df_cm, annot=True,annot_kws={"size": 12}, cmap="YlGnBu")
 
-plt.savefig(PLOTNAME+"LastConfMatrix")
+plt.savefig(PLOTNAME+"LastConfMatrix.png")
 plt.savefig(PLOTNAME+"LastConfMatrix"+'.pdf', format='pdf')
 
 #plt.show()

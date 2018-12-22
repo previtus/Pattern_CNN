@@ -9,10 +9,12 @@ if len(sys.argv)>1:
 
 img_size = None #(20,20)
 img_size = (150,150)
-epochs = 150
+epochs = 750
 batch_size = 32
 
-validation_split = 0.3
+PLOTNAME = 'classifier3_'+str(epochs)+'epochs_'
+
+validation_split = 0.2
 
 RESCALE = 1. / 255 # put data from 0-255 into 0-1
 #RESCALE = 1
@@ -294,7 +296,7 @@ model.summary()
 plot_model(model, to_file='model_top.png', show_shapes=True)
 
 # low LR
-model.compile(loss='categorical_crossentropy', optimizer=optimizers.RMSprop(lr=1e-6),metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer=optimizers.RMSprop(lr=1e-5),metrics=['accuracy'])
 #model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 
 history = model.fit(X_bottleneck_train, y_train,
@@ -303,9 +305,9 @@ history = model.fit(X_bottleneck_train, y_train,
                     validation_data=(X_bottleneck_test, y_test),
                     verbose=1)
 
-visualize_history(history.history, show=False, show_also='acc', save=True, save_path='classifier3_'+str(epochs)+'epochs_')
+visualize_history(history.history, show=False, show_also='acc', save=True, save_path=PLOTNAME)
 
-
+model.save(PLOTNAME+"model")
 
 # ==============================================================================
 
@@ -370,7 +372,7 @@ plt.figure(figsize = (10,7))
 sn.set(font_scale=1.4)#for label size
 sn.heatmap(df_cm, annot=True,annot_kws={"size": 12}, cmap="YlGnBu")
 
-plt.savefig("LastConfMatrix")
-plt.savefig("LastConfMatrix"+'.pdf', format='pdf')
+plt.savefig(PLOTNAME+"LastConfMatrix")
+plt.savefig(PLOTNAME+"LastConfMatrix"+'.pdf', format='pdf')
 
 #plt.show()

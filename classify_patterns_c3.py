@@ -9,8 +9,8 @@ if len(sys.argv)>1:
 
 img_size = None #(20,20)
 img_size = (150,150)
-epochs = 30
-batch_size = 16
+epochs = 150
+batch_size = 32
 
 validation_split = 0.3
 
@@ -49,7 +49,6 @@ import numpy as np
 import random
 import keras
 from visualize_history import visualize_history
-
 from matplotlib import pyplot as plt
 
 
@@ -282,6 +281,7 @@ print("train_data.shape[1:]", X_bottleneck_train.shape[1:])
 
 from keras.models import Sequential
 from keras.layers import Dropout, Flatten, Dense
+from keras import optimizers
 
 model = Sequential()
 model.add(Flatten(input_shape=X_bottleneck_train.shape[1:]))
@@ -293,7 +293,9 @@ model.summary()
 
 plot_model(model, to_file='model_top.png', show_shapes=True)
 
-model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
+# low LR
+model.compile(loss='categorical_crossentropy', optimizer=optimizers.RMSprop(lr=1e-6),metrics=['accuracy'])
+#model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 
 history = model.fit(X_bottleneck_train, y_train,
                     batch_size=batch_size,
@@ -362,8 +364,8 @@ print(cm)
 import seaborn as sn
 import pandas  as pd
 
-df_cm = pd.DataFrame(cm, range(len(classes_names)-1),
-                  range(len(classes_names)-1))
+#df_cm = pd.DataFrame(cm, range(len(classes_names)-1),range(len(classes_names)-1))
+df_cm = pd.DataFrame(cm, range(len(classes_names)),range(len(classes_names)))
 plt.figure(figsize = (10,7))
 sn.set(font_scale=1.4)#for label size
 sn.heatmap(df_cm, annot=True,annot_kws={"size": 12}, cmap="YlGnBu")

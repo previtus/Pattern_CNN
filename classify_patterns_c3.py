@@ -48,6 +48,8 @@ from keras.preprocessing.image import load_img, img_to_array
 import numpy as np
 import random
 import keras
+from visualize_history import visualize_history
+
 from matplotlib import pyplot as plt
 
 
@@ -299,7 +301,6 @@ history = model.fit(X_bottleneck_train, y_train,
                     validation_data=(X_bottleneck_test, y_test),
                     verbose=1)
 
-from visualize_history import visualize_history
 visualize_history(history.history, show=False, show_also='acc', save=True, save_path='classifier3_'+str(epochs)+'epochs_')
 
 

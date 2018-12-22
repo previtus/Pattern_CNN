@@ -1,4 +1,6 @@
 import sys
+from visualize_history import visualize_history
+
 print(len(sys.argv), " arguments : " , str(sys.argv))
 FOLDER = '/home/vitek/Downloads/DTD/dtd-r1.0.1/dtd/images/'
 
@@ -75,7 +77,6 @@ Y_VAL = y_from_x(X_VAL)
 from keras.preprocessing.image import load_img, img_to_array
 import numpy as np
 import keras
-from visualize_history import visualize_history
 from matplotlib import pyplot as plt
 
 print("Loading image data!")

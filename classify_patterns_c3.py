@@ -13,7 +13,7 @@ epochs = 750
 batch_size = 32
 validation_split = 0.2
 
-PLOTNAME = 'classifier3_'+str(epochs)+'epochs_'+validation_split+'splits_'+img_size[0]+'imgsizes'
+PLOTNAME = 'classifier3_'+str(epochs)+'epochs_'+str(validation_split)+'splits_'+str(img_size[0])+'imgsizes'
 
 
 RESCALE = 1. / 255 # put data from 0-255 into 0-1

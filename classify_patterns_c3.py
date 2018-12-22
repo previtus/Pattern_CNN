@@ -24,7 +24,9 @@ RESCALE = 1. / 255 # put data from 0-255 into 0-1
 
 
 folders = ["banded", "crosshatched", "grid", "matted", "potholed", "studded", "blotchy", "crystalline", "grooved", "meshed", "scaly", "swirly", "braided", "dotted", "honeycombed", "paisley", "smeared", "veined", "bubbly", "fibrous", "interlaced", "perforated", "spiralled", "waffled", "bumpy", "flecked", "knitted", "pitted", "sprinkled", "woven", "chequered", "freckled", "lacelike", "pleated", "stained", "wrinkled", "cobwebbed", "frilly", "lined", "polka-dotted", "stratified", "zigzagged", "cracked", "gauzy", "marbled", "porous", "striped"]
-classes_names = folders
+classes_names = []
+for a in folders:
+    classes_names.append(a)
 num_classes = len(classes_names)
 
 for i in range(0,len(folders)):
